@@ -23,7 +23,7 @@ from app.utils.auth import (
     verify_password,
 )
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
 
 
 @router.post("/register", response_model=Token)
@@ -78,7 +78,9 @@ async def login(login_data: LoginRequest, session: DBSessionDep):
 
 
 @router.post("/refresh-token", response_model=Token)
-async def refresh_token(refresh_data: RefreshTokenRequest, session: DBSessionDep):
+async def refresh_token_endpoint(
+    refresh_data: RefreshTokenRequest, session: DBSessionDep
+):
     try:
         payload = jwt.decode(
             refresh_data.refresh_token,
